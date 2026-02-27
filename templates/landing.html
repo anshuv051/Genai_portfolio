@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfoli-AI | Your Personal AI Presence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <style>
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-top: 80px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 40%;
+            height: 40%;
+            background: radial-gradient(circle, var(--primary-glow), transparent 70%);
+            top: 10%;
+            right: 5%;
+            z-index: -1;
+        }
+
+        .hero-h1 {
+            font-size: clamp(3rem, 10vw, 5rem);
+            line-height: 1.1;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header id="main-header" class="site-header">
+        <div class="container nav-container">
+            <a href="/" class="logo">
+                <div class="logo-icon"></div>
+                Portfoli-AI
+            </a>
+            <nav class="nav-links">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#how" class="nav-link">How it Works</a>
+                <a href="#pricing" class="nav-link">Pricing</a>
+                <a href="/login" class="nav-link">Login</a>
+                <a href="/register" class="btn btn-primary">Get Started</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero container">
+            <div class="animate">
+                <h1 class="hero-h1 gradient-text">Elevate Your Career with AI Auto-Portfolios.</h1>
+                <p style="font-size: 1.5rem; color: var(--text-dim); max-width: 600px; margin-bottom: 3rem;">
+                    Turn your static resume into a high-fidelity digital agent. Hosted, interactive, and powered by RAG
+                    technology.
+                </p>
+                <div style="display: flex; gap: 1rem;">
+                    <a href="/register" class="btn btn-primary">Start Building Free</a>
+                    <a href="/login" class="btn btn-outline">Member Login</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="section container">
+            <div class="section-header animate">
+                <h2 class="section-title">Built for the Modern Professional</h2>
+                <p class="section-subtitle">Stunning portfolios that do more than just show your work—they talk about
+                    it.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card glass animate">
+                    <span class="feature-icon">🤖</span>
+                    <h3>AI Chat Agent</h3>
+                    <p style="color: var(--text-dim);">A custom-trained RAG agent that answers questions about your
+                        experience using your actual project data.</p>
+                </div>
+                <div class="feature-card glass animate" style="animation-delay: 0.1s;">
+                    <span class="feature-icon">⚡</span>
+                    <h3>Instant Generation</h3>
+                    <p style="color: var(--text-dim);">Upload your LinkedIn PDF or Resume and get a fully functional,
+                        beautiful portfolio in seconds.</p>
+                </div>
+                <div class="feature-card glass animate" style="animation-delay: 0.2s;">
+                    <span class="feature-icon">🌐</span>
+                    <h3>Personal Domain</h3>
+                    <p style="color: var(--text-dim);">Professional hosting with your own custom URL to share with
+                        recruiters and peers.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="how" class="section container"
+            style="background: radial-gradient(circle at bottom left, rgba(99, 102, 241, 0.05), transparent 50%);">
+            <div class="section-header animate">
+                <h2 class="section-title">How it Works</h2>
+                <p class="section-subtitle">Simplified automation from data to deployment.</p>
+            </div>
+            <div class="steps-container">
+                <div class="step-card animate">
+                    <div class="step-number">1</div>
+                    <h3>Upload Data</h3>
+                    <p style="color: var(--text-dim);">Connect your LinkedIn or upload a PDF of your resume.</p>
+                </div>
+                <div class="step-card animate" style="animation-delay: 0.1s;">
+                    <div class="step-number">2</div>
+                    <h3>AI Processing</h3>
+                    <p style="color: var(--text-dim);">Our engine extracts skills and builds your semantic index.</p>
+                </div>
+                <div class="step-card animate" style="animation-delay: 0.2s;">
+                    <div class="step-number">3</div>
+                    <h3>Live Portfolio</h3>
+                    <p style="color: var(--text-dim);">Review your site and share it with the world instantly.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="section container">
+            <div class="section-header animate">
+                <h2 class="section-title">Simple Pricing</h2>
+                <p class="section-subtitle">Choose the plan that fits your career stage.</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card glass animate">
+                    <h3>Free</h3>
+                    <div class="price">$0<span>/mo</span></div>
+                    <ul class="pricing-features">
+                        <li>Standard Portfolio</li>
+                        <li>Basic AI Agent</li>
+                        <li>Portfoli-AI Domain</li>
+                        <li>Single Project</li>
+                    </ul>
+                    <a href="/register" class="btn btn-outline" style="width: 100%;">Get Started</a>
+                </div>
+                <div class="pricing-card glass popular animate" style="animation-delay: 0.1s;">
+                    <h3 style="color: var(--primary);">Pro</h3>
+                    <div class="price">$12<span>/mo</span></div>
+                    <ul class="pricing-features">
+                        <li>Advanced AI Agent</li>
+                        <li>Custom Domain Support</li>
+                        <li>Unlimited Projects</li>
+                        <li>Analytics Dashboard</li>
+                    </ul>
+                    <a href="/register" class="btn btn-primary" style="width: 100%;">Go Pro</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo footer-logo">
+                        <div class="logo-icon"></div>
+                        Portfoli-AI
+                    </div>
+                    <p class="footer-text">Building the next generation of professional identity with Generative AI.</p>
+                </div>
+                <div>
+                    <h4 class="footer-heading">Platform</h4>
+                    <ul class="footer-links">
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="/login">Login</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-heading">Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Privacy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-heading">Connect</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Portfoli-AI. All rights reserved.</p>
+                <p>Built with ❤️ for Professionals</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+    </script>
+</body>
+
+</html>

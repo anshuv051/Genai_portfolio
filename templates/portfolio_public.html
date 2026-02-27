@@ -1,0 +1,1671 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ username }} | Portfoli-AI</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <style>
+        :root {
+            --bg: {
+                    {
+                    theme.bg
+                }
+            }
+
+            ;
+
+            --text: {
+                    {
+                    theme.text
+                }
+            }
+
+            ;
+
+            --text-dim: {
+                    {
+                    theme.text_dim
+                }
+            }
+
+            ;
+
+            --primary: {
+                    {
+                    theme.primary
+                }
+            }
+
+            ;
+
+            --secondary: {
+                    {
+                    theme.secondary
+                }
+            }
+
+            ;
+
+            --card-bg: {
+                    {
+                    theme.card_bg
+                }
+            }
+
+            ;
+
+            --border: {
+                    {
+                    theme.border
+                }
+            }
+
+            ;
+            --section-spacing: 100px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 80%, var(--primary) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, var(--secondary) 0%, transparent 50%);
+            opacity: 0.03;
+            animation: bgFloat 20s ease-in-out infinite;
+        }
+
+        @keyframes bgFloat {
+
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            33% {
+                transform: translate(2%, 2%) rotate(2deg);
+            }
+
+            66% {
+                transform: translate(-2%, 1%) rotate(-2deg);
+            }
+        }
+
+        /* Floating Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.15;
+            animation: float 15s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--primary);
+            top: 10%;
+            right: -100px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 300px;
+            height: 300px;
+            background: var(--secondary);
+            bottom: 20%;
+            left: -50px;
+            animation-delay: -5s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-30px) scale(1.05);
+            }
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Navigation */
+        nav {
+            padding: 1.5rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .port-logo {
+            font-size: 1.6rem;
+            letter-spacing: -0.03em;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 700;
+            font-family: 'Space Grotesk', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .port-logo .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .port-nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .port-nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .port-nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .port-nav-links a:hover {
+            color: var(--text);
+        }
+
+        .port-nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .port-header {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 120px 0 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            margin-bottom: 2rem;
+            width: fit-content;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .hero-title {
+            font-size: clamp(3.5rem, 8vw, 6rem);
+            font-weight: 700;
+            line-height: 1.05;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.04em;
+            color: var(--text);
+            animation: fadeInUp 0.8s ease 0.1s forwards;
+            opacity: 0;
+        }
+
+        .hero-title .gradient {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+
+        .hero-title .gradient::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: blur(20px);
+            opacity: 0.5;
+            z-index: -1;
+        }
+
+        .hero-text {
+            font-size: 1.35rem;
+            color: var(--text-dim);
+            max-width: 600px;
+            font-weight: 400;
+            line-height: 1.75;
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 0.8s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            animation: fadeInUp 0.8s ease 0.3s forwards;
+            opacity: 0;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: #ffffff;
+            color: #0a0c10;
+            border: none;
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--card-bg);
+        }
+
+        /* Sections */
+        .section-wrap {
+            padding: var(--section-spacing) 0;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-left: 2rem;
+            padding-right: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-header-top {
+            margin-bottom: 4rem;
+        }
+
+        .section-title-alt {
+            font-size: 0.8rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title-alt::before {
+            content: '';
+            width: 30px;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .section-main-heading {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        /* Cards */
+        .port-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 2.5rem;
+            border-radius: 24px;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .port-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transition: transform 0.4s;
+        }
+
+        .port-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .port-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-tag {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-tag::before {
+            content: '▹';
+        }
+
+        .card-heading {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+            font-weight: 600;
+        }
+
+        .card-desc {
+            color: var(--text-dim);
+            font-size: 1rem;
+            line-height: 1.7;
+            flex-grow: 1;
+        }
+
+        /* Project Links */
+        .project-links {
+            margin-top: 1.5rem;
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .project-link {
+            padding: 0.6rem 1.2rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: var(--text);
+            background: var(--bg);
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .project-link:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        /* Skills */
+        .skills-container {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 3.5rem;
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skills-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 70%, var(--primary) 0%, transparent 30%),
+                radial-gradient(circle at 70% 30%, var(--secondary) 0%, transparent 30%);
+            opacity: 0.05;
+        }
+
+        .skill-category {
+            margin-bottom: 2.5rem;
+        }
+
+        .skill-category:last-child {
+            margin-bottom: 0;
+        }
+
+        .skill-category h4 {
+            color: var(--text);
+            font-size: 1.1rem;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .skill-category h4::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+
+        .skill-tag {
+            padding: 0.6rem 1.2rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            transition: all 0.3s;
+        }
+
+        .skill-tag:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+
+        /* Experience Cards Grid */
+        .exp-grid,
+        .proj-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Chat Widget */
+        #chat-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        #chat-trigger {
+            width: 65px;
+            height: 65px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.4);
+            transition: all 0.3s;
+            border: none;
+        }
+
+        #chat-trigger:hover {
+            transform: scale(1.08);
+        }
+
+        #chat-window {
+            position: absolute;
+            bottom: 85px;
+            right: 0;
+            width: 400px;
+            height: 550px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .chat-header {
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .chat-avatar {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .chat-status {
+            width: 10px;
+            height: 10px;
+            background: #22c55e;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #22c55e;
+        }
+
+        .chat-msgs {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .bubble {
+            padding: 1rem 1.25rem;
+            border-radius: 20px;
+            line-height: 1.5;
+            font-size: 0.95rem;
+            max-width: 88%;
+            animation: messageSlide 0.3s ease forwards;
+        }
+
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .bubble-bot {
+            background: var(--card-bg);
+            border-bottom-left-radius: 6px;
+            align-self: flex-start;
+            border: 1px solid var(--border);
+        }
+
+        .bubble-user {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-bottom-right-radius: 6px;
+            align-self: flex-end;
+            color: white;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--text-dim);
+            border-radius: 50%;
+            display: inline-block;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+
+        .dot:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        .dot:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            80%,
+            100% {
+                transform: scale(0);
+            }
+
+            40% {
+                transform: scale(1.0);
+            }
+        }
+
+        .chat-input-row {
+            padding: 1.25rem;
+            background: var(--card-bg);
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 12px;
+        }
+
+        .chat-input-row input {
+            flex: 1;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 0.875rem 1.25rem;
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+
+        .chat-input-row input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .send-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 14px;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .close-chat {
+            margin-left: auto;
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            cursor: pointer;
+            font-size: 1.75rem;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .close-chat:hover {
+            color: var(--text);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 3rem;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlide 0.3s ease;
+        }
+
+        @keyframes modalSlide {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal h2 {
+            margin-top: 0;
+            margin-bottom: 2rem;
+            font-size: 1.75rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.6rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--text);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: var(--card-bg);
+            color: var(--text);
+            font-size: 1rem;
+            box-sizing: border-box;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-group textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .modal-actions .btn {
+            flex: 1;
+            justify-content: center;
+        }
+
+        /* Footer */
+        footer {
+            padding: 5rem 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            margin-top: 5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        footer p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .port-header {
+                padding-top: 100px;
+            }
+
+            .hero-title {
+                font-size: 2.75rem;
+            }
+
+            .hero-text {
+                font-size: 1.1rem;
+            }
+
+            .port-nav-links {
+                display: none;
+            }
+
+            .exp-grid,
+            .proj-grid {
+                grid-template-columns: 1fr;
+            }
+
+            #chat-window {
+                width: calc(100vw - 40px);
+                right: -10px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Scroll Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Profile Image */
+        .hero-container {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .profile-image-wrapper {
+            flex-shrink: 0;
+        }
+
+        .profile-image {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .profile-dummy {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            font-weight: 700;
+            color: white;
+            border: 3px solid var(--border);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        @media (max-width: 768px) {
+            .hero-container {
+                flex-direction: column;
+                text-align: center;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Theme Switcher -->
+    <div id="theme-switcher" style="position: fixed; top: 100px; right: 20px; z-index: 1001;">
+        <button onclick="toggleThemeMenu()" class="theme-switch-btn" title="Change Theme">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="5"></circle>
+                <path
+                    d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42">
+                </path>
+            </svg>
+        </button>
+        <div id="theme-menu" class="theme-menu">
+            <div class="theme-menu-title">Choose Theme</div>
+            <div class="theme-options">
+                <button class="theme-option" onclick="changeTheme('midnight')" data-theme="midnight">
+                    <span class="theme-dot" style="background: linear-gradient(135deg, #8b5cf6, #ec4899);"></span>
+                    Midnight
+                </button>
+                <button class="theme-option" onclick="changeTheme('ocean')" data-theme="ocean">
+                    <span class="theme-dot" style="background: linear-gradient(135deg, #06b6d4, #3b82f6);"></span>
+                    Ocean
+                </button>
+                <button class="theme-option" onclick="changeTheme('sunset')" data-theme="sunset">
+                    <span class="theme-dot" style="background: linear-gradient(135deg, #f59e0b, #ef4444);"></span>
+                    Sunset
+                </button>
+                <button class="theme-option" onclick="changeTheme('forest')" data-theme="forest">
+                    <span class="theme-dot" style="background: linear-gradient(135deg, #22c55e, #14b8a6);"></span>
+                    Forest
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .theme-switch-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .theme-switch-btn:hover {
+            transform: scale(1.1);
+            border-color: var(--primary);
+        }
+
+        .theme-menu {
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1rem;
+            min-width: 180px;
+            display: none;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            animation: menuSlide 0.3s ease;
+        }
+
+        .theme-menu.active {
+            display: block;
+        }
+
+        @keyframes menuSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .theme-menu-title {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .theme-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .theme-option {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            color: var(--text);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            text-align: left;
+        }
+
+        .theme-option:hover {
+            background: var(--bg);
+            border-color: var(--border);
+        }
+
+        .theme-option.active {
+            border-color: var(--primary);
+            background: var(--bg);
+        }
+
+        .theme-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+    </style>
+
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+
+    <nav>
+        <div class="nav-inner">
+            <a href="/" class="port-logo">
+                <div class="logo-icon">{{ username[0]|upper }}</div>
+                <span>{{ username }}.</span>
+            </a>
+            <ul class="port-nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#" onclick="openContactModal(); return false;">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="port-header" id="about">
+        <div class="hero-container">
+            <div class="profile-image-wrapper">
+                {% if profile_image %}
+                <img src="{{ profile_image }}" alt="{{ username }}" class="profile-image">
+                {% else %}
+                <div class="profile-dummy">{{ username[0]|upper }}</div>
+                {% endif %}
+            </div>
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="dot"></span>
+                    <span>Available for opportunities</span>
+                </div>
+                <h1 class="hero-title">
+                    {% if p.home and p.home.hero_title %}
+                    <span class="gradient">{{ p.home.hero_title }}</span>
+                    {% else %}
+                    <span class="gradient">{{ username }}</span>
+                    {% endif %}
+                </h1>
+                <p class="hero-text">
+                    {% if p.home and p.home.personal_introduction %}
+                    {{ p.home.personal_introduction }}
+                    {% else %}
+                    Passionate professional dedicated to creating impactful solutions and bringing innovative ideas to
+                    life.
+                    {% endif %}
+                </p>
+                <div class="action-buttons">
+                    <button onclick="openContactModal()" class="btn btn-primary">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                            </path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                        Get in Touch
+                    </button>
+                    {% if contact %}
+                    <div class="contact-links" style="display: flex; gap: 0.75rem; margin-top: 1rem;">
+                        {% if contact.email %}
+                        <a href="mailto:{{ contact.email }}" class="btn btn-outline" title="Email"
+                            style="padding: 0.75rem 1rem;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                </path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                        </a>
+                        {% endif %}
+                        {% if contact.linkedin %}
+                        <a href="{{ contact.linkedin }}" target="_blank" class="btn btn-outline" title="LinkedIn"
+                            style="padding: 0.75rem 1rem;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                            </svg>
+                        </a>
+                        {% endif %}
+                        {% if contact.github %}
+                        <a href="{{ contact.github }}" target="_blank" class="btn btn-outline" title="GitHub"
+                            style="padding: 0.75rem 1rem;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                            </svg>
+                        </a>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="experience" class="section-wrap">
+            <div class="section-header-top fade-in">
+                <span class="section-title-alt">My Journey</span>
+                <h2 class="section-main-heading">Experience</h2>
+            </div>
+            <div class="exp-grid">
+                {% if p.experience %}
+                {% set exp_data = p.experience if p.experience is iterable and p.experience is not mapping else
+                [p.experience] %}
+                {% for item in exp_data %}
+                <div class="port-card fade-in">
+                    {% if item is mapping %}
+                    <div class="card-tag">{{ item.get('company', 'Company') }} · {{ item.get('dates', 'Present') }}
+                    </div>
+                    <h3 class="card-heading">{{ item.get('job_role', 'Role') }}</h3>
+                    <p class="card-desc">{{ item.get('description', '') }}</p>
+                    {% else %}
+                    <h3 class="card-heading">Experience</h3>
+                    <p class="card-desc">{{ item }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="port-card fade-in">
+                    <div class="card-tag">Professional Journey</div>
+                    <h3 class="card-heading">Experience details will appear here</h3>
+                    <p class="card-desc">Upload your resume to generate your portfolio.</p>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+
+        <section id="projects" class="section-wrap">
+            <div class="section-header-top fade-in">
+                <span class="section-title-alt">Featured Work</span>
+                <h2 class="section-main-heading">Projects</h2>
+            </div>
+            <div class="proj-grid">
+                {% if p.projects %}
+                {% set proj_data = p.projects if p.projects is iterable and p.projects is not mapping else [p.projects]
+                %}
+                {% for proj in proj_data %}
+                <div class="port-card fade-in">
+                    {% if proj is mapping %}
+                    <div class="card-tag">{{ proj.get('tech_stack', 'Technology') }}</div>
+                    <h3 class="card-heading">{{ proj.get('name', 'Project') }}</h3>
+                    <p class="card-desc">{{ proj.get('description', '') }}</p>
+                    <div class="project-links">
+                        {% if proj.get('github_url') %}
+                        <a href="{{ proj.github_url }}" target="_blank" class="project-link">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                            </svg>
+                            GitHub
+                        </a>
+                        {% endif %}
+                        {% if proj.get('demo_url') %}
+                        <a href="{{ proj.demo_url }}" target="_blank" class="project-link">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                            </svg>
+                            Live Demo
+                        </a>
+                        {% endif %}
+                    </div>
+                    {% else %}
+                    <h3 class="card-heading">Project</h3>
+                    <p class="card-desc">{{ proj }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="port-card fade-in">
+                    <div class="card-tag">Projects</div>
+                    <h3 class="card-heading">Project details will appear here</h3>
+                    <p class="card-desc">Upload your resume to generate your portfolio.</p>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+
+        <section id="skills" class="section-wrap" style="padding-bottom: 120px;">
+            <div class="section-header-top fade-in">
+                <span class="section-title-alt">Expertise</span>
+                <h2 class="section-main-heading">Skills & Technologies</h2>
+            </div>
+            <div class="skills-container fade-in">
+                {% if p.skills %}
+                {% if p.skills is mapping %}
+                {% for category, items in p.skills.items() %}
+                <div class="skill-category">
+                    <h4>{{ category.replace('_', ' ') | title }}</h4>
+                    <div class="skill-tags">
+                        {% for skill in items %}
+                        <span class="skill-tag">{{ skill }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+                {% elif p.skills is iterable and p.skills is not string %}
+                <div class="skill-tags">
+                    {% for skill in p.skills %}
+                    <span class="skill-tag">{{ skill }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <span class="skill-tag">{{ p.skills }}</span>
+                {% endif %}
+                {% else %}
+                <p style="color: var(--text-dim);">Skills will appear here after generating your portfolio.</p>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 2rem;">
+            <p>© 2025 <b>{{ username }}</b> · Built with Portfoli-AI</p>
+        </div>
+    </footer>
+
+    <!-- Contact Modal -->
+    <div class="modal-overlay" id="contactModal">
+        <div class="modal">
+            <h2>Let's Connect</h2>
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="contactName">Your Name</label>
+                    <input type="text" id="contactName" name="name" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label for="contactEmail">Email Address</label>
+                    <input type="email" id="contactEmail" name="email" required placeholder="john@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="contactMessage">Message</label>
+                    <textarea id="contactMessage" name="message" required
+                        placeholder="Tell me about your project..."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeContactModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </div>
+            </form>
+            <div id="contactStatus" style="margin-top: 1.5rem; text-align: center;"></div>
+        </div>
+    </div>
+
+    <!-- AI Chat Widget -->
+    <div id="chat-widget">
+        <div id="chat-window">
+            <div class="chat-header">
+                <div class="chat-avatar">🤖</div>
+                <div>
+                    <div style="font-weight: 700; font-size: 1rem; color: var(--text);">AI Assistant</div>
+                    <div
+                        style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-dim);">
+                        <span class="chat-status"></span>
+                        <span>Online</span>
+                    </div>
+                </div>
+                <button class="close-chat" id="closeChat">&times;</button>
+            </div>
+            <div class="chat-msgs" id="chatMsgs">
+                <div class="bubble bubble-bot">
+                    Hi there! 👋 I'm the AI assistant for {{ username }}. Feel free to ask me anything about their work,
+                    skills, or experience!
+                </div>
+            </div>
+            <div class="chat-input-row">
+                <input type="text" id="chatInput" placeholder="Type your message...">
+                <button onclick="send()" class="send-btn" id="sendBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <button id="chat-trigger">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+        </button>
+    </div>
+
+    <script>
+        // Theme configurations
+        const themeConfigs = {
+            'midnight': { bg: '#0a0a0f', text: '#e4e4e7', text_dim: '#71717a', primary: '#8b5cf6', secondary: '#ec4899', card_bg: 'rgba(30, 30, 40, 0.8)', border: 'rgba(139, 92, 246, 0.2)' },
+            'ocean': { bg: '#0c1929', text: '#e0f2fe', text_dim: '#7dd3fc', primary: '#06b6d4', secondary: '#3b82f6', card_bg: 'rgba(12, 25, 41, 0.9)', border: 'rgba(6, 182, 212, 0.3)' },
+            'sunset': { bg: '#1a0a0a', text: '#fef3c7', text_dim: '#fbbf24', primary: '#f59e0b', secondary: '#ef4444', card_bg: 'rgba(40, 20, 20, 0.9)', border: 'rgba(245, 158, 11, 0.3)' },
+            'forest': { bg: '#0a1a0f', text: '#dcfce7', text_dim: '#86efac', primary: '#22c55e', secondary: '#14b8a6', card_bg: 'rgba(10, 26, 15, 0.9)', border: 'rgba(34, 197, 94, 0.3)' }
+        };
+
+        // Apply theme from localStorage if exists
+        (function () {
+            const savedTheme = localStorage.getItem('portfolio_theme');
+            if (savedTheme && themeConfigs[savedTheme]) {
+                const config = themeConfigs[savedTheme];
+                const root = document.documentElement;
+                root.style.setProperty('--bg', config.bg);
+                root.style.setProperty('--text', config.text);
+                root.style.setProperty('--text-dim', config.text_dim);
+                root.style.setProperty('--primary', config.primary);
+                root.style.setProperty('--secondary', config.secondary);
+                root.style.setProperty('--card-bg', config.card_bg);
+                root.style.setProperty('--border', config.border);
+            }
+        })();
+
+        // Scroll Animation Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Chat Widget
+        const widget = document.getElementById('chat-window');
+        const trigger = document.getElementById('chat-trigger');
+        const closeBtn = document.getElementById('closeChat');
+        const input = document.getElementById('chatInput');
+        const msgs = document.getElementById('chatMsgs');
+        const userId = "{{ user_id }}";
+
+        const toggleChat = () => {
+            const isVisible = widget.style.display === 'flex';
+            widget.style.display = isVisible ? 'none' : 'flex';
+            if (!isVisible) {
+                input.focus();
+            }
+        };
+
+        trigger.onclick = toggleChat;
+        closeBtn.onclick = toggleChat;
+
+        async function send() {
+            const query = input.value.trim();
+            if (!query) return;
+
+            append('user', query);
+            input.value = '';
+            showTyping();
+
+            try {
+                const res = await fetch('/chat/' + userId, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query })
+                });
+                const data = await res.json();
+                hideTyping();
+                append('bot', data.response);
+            } catch (e) {
+                hideTyping();
+                append('bot', "Connection issues. Please try again.");
+            }
+        }
+
+        function showTyping() {
+            const div = document.createElement('div');
+            div.id = 'typing-indicator';
+            div.className = 'bubble bubble-bot';
+            div.style.display = 'flex';
+            div.style.gap = '5px';
+            div.style.width = 'fit-content';
+            div.style.padding = '14px 20px';
+            div.innerHTML = '<span class="dot"></span><span class="dot"></span><span class="dot"></span>';
+            msgs.appendChild(div);
+            msgs.scrollTop = msgs.scrollHeight;
+        }
+
+        function hideTyping() {
+            const indicator = document.getElementById('typing-indicator');
+            if (indicator) indicator.remove();
+        }
+
+        function append(role, text) {
+            const div = document.createElement('div');
+            div.className = `bubble bubble-${role}`;
+            div.innerText = text;
+            msgs.appendChild(div);
+            msgs.scrollTo({ top: msgs.scrollHeight, behavior: 'smooth' });
+        }
+
+        input.onkeypress = (e) => { if (e.key === 'Enter') send(); };
+
+        // Contact Model
+        function openContactModal() {
+            document.getElementById('contactModal').classList.add('active');
+        }
+
+        function closeContactModal() {
+            document.getElementById('contactModal').classList.remove('active');
+            document.getElementById('contactForm').reset();
+            document.getElementById('contactStatus').innerHTML = '';
+        }
+
+        document.getElementById('contactForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const status = document.getElementById('contactStatus');
+            const formData = new FormData(e.target);
+
+            status.innerHTML = '<span style="color: var(--text-dim);">Sending...</span>';
+
+            try {
+                const response = await fetch('/contact/' + userId, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    status.innerHTML = '<span style="color: #22c55e;">✅ Message sent successfully!</span>';
+                    setTimeout(closeContactModal, 1500);
+                } else {
+                    status.innerHTML = '<span style="color: #f87171;">❌ Failed to send message</span>';
+                }
+            } catch (err) {
+                status.innerHTML = '<span style="color: #f87171;">❌ Network error</span>';
+            }
+        };
+
+        document.getElementById('contactModal').onclick = (e) => {
+            if (e.target.id === 'contactModal') closeContactModal();
+        };
+
+        // Theme Switcher Functions
+        const currentTheme = "{{ user_theme }}";
+
+        function toggleThemeMenu() {
+            const menu = document.getElementById('theme-menu');
+            menu.classList.toggle('active');
+
+            document.querySelectorAll('.theme-option').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.theme === currentTheme);
+            });
+        }
+
+        document.addEventListener('click', function (e) {
+            const switcher = document.getElementById('theme-switcher');
+            const menu = document.getElementById('theme-menu');
+            if (switcher && !switcher.contains(e.target)) {
+                menu.classList.remove('active');
+            }
+        });
+
+        async function changeTheme(theme) {
+            // Try to save to backend (works if owner is logged in)
+            try {
+                const formData = new FormData();
+                formData.append('theme', theme);
+
+                const response = await fetch('/update-theme', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    localStorage.setItem('portfolio_theme', theme);
+                    location.reload();
+                    return;
+                }
+            } catch (err) {
+                // Owner not logged in - just preview locally
+            }
+
+            // Preview locally (for visitors)
+            localStorage.setItem('portfolio_theme', theme);
+
+            // Apply theme immediately without reload
+            const config = themeConfigs[theme];
+            if (config) {
+                const root = document.documentElement;
+                root.style.setProperty('--bg', config.bg);
+                root.style.setProperty('--text', config.text);
+                root.style.setProperty('--text-dim', config.text_dim);
+                root.style.setProperty('--primary', config.primary);
+                root.style.setProperty('--secondary', config.secondary);
+                root.style.setProperty('--card-bg', config.card_bg);
+                root.style.setProperty('--border', config.border);
+            }
+
+            // Update UI
+            document.querySelectorAll('.theme-option').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.theme === theme);
+            });
+
+            // Show feedback
+            const status = document.getElementById('theme-status');
+            if (!status) {
+                const statusDiv = document.createElement('div');
+                statusDiv.id = 'theme-status';
+                statusDiv.style.cssText = 'position:fixed;top:20px;right:100px;padding:10px 20px;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;color:var(--text);z-index:2000;';
+                document.body.appendChild(statusDiv);
+            }
+            const statusEl = document.getElementById('theme-status');
+            statusEl.innerHTML = '✅ Theme preview applied!';
+            statusEl.style.display = 'block';
+            setTimeout(() => { statusEl.style.display = 'none'; }, 2000);
+        }
+    </script>
+</body>
+
+</html>

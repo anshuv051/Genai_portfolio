@@ -1,0 +1,20 @@
+# --- Standard Python Ignores ---
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+ENV/
+.env
+
+# --- Database / Local Storage ---
+*.db
+chroma_db/
+
+# --- OS Specific ---
+.DS_Store
+Thumbs.db
+
+# --- User Uploads ---
+static/uploads/

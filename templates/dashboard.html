@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Portfoli-AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #a855f7;
+            --bg-dark: #030406;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --text-main: #ffffff;
+            --text-dim: #9ca3af;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        .app-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            padding: 2rem;
+            border-right: 1px solid var(--glass-border);
+            flex-shrink: 0;
+            background: var(--glass-bg);
+        }
+
+        .content {
+            flex-grow: 1;
+            padding: 3rem;
+            max-width: 1200px;
+        }
+
+        .nav-item {
+            padding: 1rem;
+            border-radius: 12px;
+            color: var(--text-dim);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: 0.3s;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(99, 102, 241, 0.2);
+            color: white;
+        }
+
+        .glass {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.3s;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: white;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        input[type="file"],
+        input[type="text"],
+        input[type="password"] {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            color: white;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .loading-bar {
+            height: 4px;
+            background: var(--glass-border);
+            border-radius: 2px;
+            overflow: hidden;
+            display: none;
+            margin-top: 1rem;
+        }
+
+        .loading-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            padding: 2rem;
+            border-radius: 16px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .contact-list {
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .contact-item:last-child {
+            border-bottom: none;
+        }
+
+        .contact-email {
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .contact-message {
+            color: var(--text-dim);
+            margin-top: 0.5rem;
+        }
+
+        .contact-date {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-layout">
+        <aside class="sidebar glass">
+            <h2 style="margin-bottom: 3rem;" class="gradient-text">Portfoli-AI</h2>
+            <nav>
+                <div class="nav-item active" onclick="switchTab('generate', this)">📄 Generate</div>
+                <div class="nav-item" onclick="switchTab('analytics', this)">📊 Analytics</div>
+                <div class="nav-item" onclick="switchTab('contacts', this)">✉️ Contacts</div>
+                <a href="/p/{{ user.username }}" target="_blank" class="nav-item">🌐 Live Website</a>
+                <a href="/logout" class="nav-item" style="color: #f87171; margin-top: 4rem;">🔒 Sign Out</a>
+            </nav>
+            <div style="margin-top: auto; padding-top: 2rem; font-size: 0.8rem; color: var(--text-dim);">
+                USER: <b>{{ user.username.upper() }}</b>
+            </div>
+        </aside>
+
+        <main class="content">
+            <h1 style="font-size: 2.5rem; margin-bottom: 2rem;">Dashboard</h1>
+
+            <!-- Generate Tab -->
+            <div id="generate" class="tab-content active">
+                <div class="glass" style="padding: 2rem;">
+                    <h3>Generate Portfolio</h3>
+                    <p style="color: var(--text-dim); margin-bottom: 1.5rem;">
+                        Upload your resume (PDF, DOCX, or TXT) to generate an AI-powered portfolio.
+                    </p>
+
+                    <form id="uploadForm">
+                        <input type="file" id="resumeFile" accept=".pdf,.docx,.txt" style="margin-bottom: 1.5rem;"
+                            required>
+                        <button type="submit" class="btn btn-primary" id="genBtn">🚀 Generate Portfolio</button>
+                        <div class="loading-bar" id="loadBar">
+                            <div class="loading-progress" id="progress"></div>
+                        </div>
+                    </form>
+                    <div id="status" style="margin-top: 1rem;"></div>
+                </div>
+
+                <div class="glass" style="padding: 2rem; margin-top: 1.5rem;">
+                    <h3>API Configuration</h3>
+                    <p style="color: var(--text-dim); margin-bottom: 1.5rem;">
+                        Enter your OpenRouter API Key to power AI features.
+                    </p>
+                    <form id="keyForm" style="display: flex; gap: 1rem;">
+                        <input type="password" id="apiKey" placeholder="sk-or-v1-..."
+                            value="{{ user.openrouter_key or '' }}">
+                        <button type="submit" class="btn btn-outline">Save Key</button>
+                    </form>
+                    <div id="keyStatus" style="margin-top: 1rem;"></div>
+                </div>
+            </div>
+
+            <!-- Analytics Tab -->
+            <div id="analytics" class="tab-content">
+                <div class="glass" style="padding: 2rem;">
+                    <h3>Portfolio Analytics</h3>
+                    <p style="color: var(--text-dim);">Track visitor interactions with your portfolio.</p>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalViews">0</div>
+                            <div class="stat-label">Total Views</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalChats">0</div>
+                            <div class="stat-label">Chat Interactions</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalContacts">0</div>
+                            <div class="stat-label">Contact Messages</div>
+                        </div>
+                    </div>
+                    <div id="analyticsStatus" style="margin-top: 1rem;"></div>
+                </div>
+            </div>
+
+            <!-- Contacts Tab -->
+            <div id="contacts" class="tab-content">
+                <div class="glass" style="padding: 2rem;">
+                    <h3>Contact Submissions</h3>
+                    <p style="color: var(--text-dim);">Messages sent through your portfolio contact form.</p>
+
+                    <div id="contactList" class="contact-list">
+                        <p style="color: var(--text-dim);">No contact messages yet.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Tab switching
+        function switchTab(tabId, navItem) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            navItem.classList.add('active');
+
+            if (tabId === 'analytics') loadAnalytics();
+            if (tabId === 'contacts') loadContacts();
+        }
+
+        // API Key update
+        document.getElementById('keyForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const status = document.getElementById('keyStatus');
+            const key = document.getElementById('apiKey').value;
+
+            btn.disabled = true;
+            btn.innerText = "Saving...";
+
+            const formData = new FormData();
+            formData.append('key', key);
+
+            try {
+                const response = await fetch('/update-key', { method: 'POST', body: formData });
+                if (response.ok) {
+                    status.innerHTML = "<span style='color: white;'>✅ Key updated successfully.</span>";
+                } else {
+                    const err = await response.json();
+                    status.innerText = "❌ Error: " + (err.detail || "Failed to update key");
+                }
+            } catch (err) {
+                status.innerText = "❌ Network error. Is the server running?";
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Save Key";
+            }
+        };
+
+        // Portfolio generation
+        document.getElementById('uploadForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('genBtn');
+            const status = document.getElementById('status');
+            const loadBar = document.getElementById('loadBar');
+            const progress = document.getElementById('progress');
+            const file = document.getElementById('resumeFile').files[0];
+
+            if (!file) {
+                status.innerHTML = '<span style="color: #f87171;">Please select a file</span>';
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerText = "⏳ Processing...";
+            loadBar.style.display = 'block';
+            status.innerText = "Analyzing resume...";
+
+            let p = 0;
+            const interval = setInterval(() => {
+                p += Math.random() * 8;
+                if (p > 90) clearInterval(interval);
+                progress.style.width = p + '%';
+            }, 300);
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await fetch('/generate', { method: 'POST', body: formData });
+                if (response.ok) {
+                    clearInterval(interval);
+                    progress.style.width = '100%';
+                    status.innerHTML = "<span style='color: white;'>✅ Portfolio generated!</span> <a href='/p/{{ user.username }}' target='_blank' style='color: white; margin-left: 1rem;'>View →</a>";
+                } else {
+                    clearInterval(interval);
+                    const err = await response.json();
+                    status.innerText = "❌ Error: " + (err.detail || "Generation failed");
+                }
+            } catch (err) {
+                clearInterval(interval);
+                status.innerText = "❌ Network error. Is the server running?";
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "🚀 Generate Portfolio";
+            }
+        };
+
+        // Load analytics
+        async function loadAnalytics() {
+            try {
+                const response = await fetch('/analytics-data');
+                if (!response.ok) throw new Error('Failed to load');
+                const data = await response.json();
+                document.getElementById('totalViews').innerText = data.total_views || 0;
+                document.getElementById('totalChats').innerText = data.total_chats || 0;
+                document.getElementById('totalContacts').innerText = data.total_contacts || 0;
+            } catch (err) {
+                console.error('Failed to load analytics:', err);
+            }
+        }
+
+        // Load contacts
+        async function loadContacts() {
+            try {
+                const response = await fetch('/contacts-data');
+                if (!response.ok) throw new Error('Failed to load');
+                const contacts = await response.json();
+                const list = document.getElementById('contactList');
+
+                if (contacts.length === 0) {
+                    list.innerHTML = '<p style="color: var(--text-dim);">No contact messages yet.</p>';
+                    return;
+                }
+
+                list.innerHTML = contacts.map(c => `
+                    <div class="contact-item">
+                        <div class="contact-email">${c.email}</div>
+                        <div class="contact-message">${c.message}</div>
+                        <div class="contact-date">${new Date(c.created_at).toLocaleString()}</div>
+                    </div>
+                `).join('');
+            } catch (err) {
+                console.error('Failed to load contacts:', err);
+            }
+        }
+    </script>
+</body>
+
+</html>
